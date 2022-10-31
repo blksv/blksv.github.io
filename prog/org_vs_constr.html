@@ -1,0 +1,116 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Organic vs constructive programming</title>
+    <meta charset="utf-8" />    <link rel="canonical" href="/prog/org_vs_constr" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="/style.css" />
+    <link rel="icon" type="image/png" href="/images/favicon.png"/>
+<meta property="og:locale" content="en" />    <meta property="og:type" content="website" /><meta property="og:title" content="" />
+<meta property="og:url" content="https://blksv.dev/prog/org_vs_constr" /></head>
+
+<body>
+    <header>
+<nav class="menu">
+    <label class="menu-container" for="toggle-menu">
+        <div class="menu-head">
+            <a href='/' class="menu-home">Andrei Bolkisev</a>
+            <div class="social">
+                <span style="vertical-align: middle;"> Contact:</span>
+                <a class="menu-link" href='https://t.me/blksv' target="_blank"><img src='/images/tg.svg' style='height: 1em;'></a>
+                <a class="menu-link" href='/contact' target="_blank"><img src='/images/mail.svg' style='height: 1em;'></a>
+                <a class="menu-link" href='https://www.linkedin.com/in/blksv/' target="_blank"><img src='/images/li.svg' style='height: 1em;'></a>
+                |
+                <a href="/feed.atom.xml" class="menu-link"><i class="share">&#xea9b;</i></a>
+                <a href="/updates" class="menu-link"><i class="share">&#xe953;</i></a>
+            </div>
+        </div>
+        <span class="checkmark">&equiv;</span>
+    </label>
+    <input type="checkbox" id="toggle-menu" class="toggle-menu" />
+    <ul class="menu">            <li class="menu-item"><a href="/contract" class="menu-link">Contract Guidelines</a></li>            <li class="menu-item"><a href="/tc" class="menu-link">Contract T&amp;C</a></li>            <li class="menu-item"><a href="/prog" class="menu-link">Blog</a></li>    </ul>
+</nav>    </header>
+    <main>
+        <article>
+            <header>
+                <h1> Organic vs constructive programming </h1>
+                <div class="meta">                        <p> Published: <time>2022-07-05</time> </p>
+<p>Up:</p>
+                            <ul>
+    <a href='/prog'>Notes on programming</a>
+
+    </ul>
+
+                </div>
+            </header>
+            <div class="content">                <section id="">
+<div class="meta">
+<details>
+            <summary>Referenced in:</summary>
+            <ul>
+                        <li><a href='/'>Andrei Bolkisev</a></li>
+            </ul>
+        </details>
+</div>
+<p>Constructive style requires a programmer to structure a project in some regular, uniform manner.
+Like a building.
+It is the only possible way of the large-scale programming, because it makes for easy onboarding, independence of individual developers, and thus high predictability of outcomes.
+Its limit is the "append-only programming", where the project is pushed forward only by adding new (and sometimes deleting old) parts, without touching existing code.
+SOLID is, effectively, the epitome of the append-only coding principles.</p>
+<p>As mastering this style drives one's career to handsomely-paid positions in megacorps, it became de-facto standard in the industry.
+For otherwise-minded companies are cut off developers and otherwise-minded developers are cut off their career.</p>
+<p>But this is detrimental for the industry.</p>
+<p>At the surface level, uniformity of the codebase means tons of boilerplate code.
+A programmer is just not allowed to code straight to the point, but must fit the solution into the required structure.
+This alone already creates bloated barely-moving overconsuming software.</p>
+<p>A level deeper, it means tons of infrastructure code.
+Piles of frameworks over frameworks to handle at least part of that boilerplate.
+And then — hordes of adapters between the domain logic and all this frameworks.</p>
+<p>Another level, and we arrive at the need of a very careful design.
+For it is almost impossible to refactor such a system in a way the original design does not support, because it would mean rewriting almost all the boilerplate and infrastructure.</p>
+<p>But to err is human.
+And millions of developers are burning out fitting elegant solutions into uniform structures doomed to a soon massive rewrite.
+And thousands of projects grind to a complete halt being overwhelmed by unessential code bloat.</p>
+<p>That's why I advocate for organic style.
+Which is, essentially, KISS, DRY and YAGNI, as opposed to SOLID, and aims for compact, straight to the point codebase, which  constantly evolves, and not just getting appended to.</p>
+<p>But of course, this style is also a host of fatal deficiencies conspiring to kill your project.</p>
+<ol>
+<li>It doesn't scale. It admits no more than 3–5 closely communicating developers, which can work with the same productivity as maybe 10–20 in a constructive environment, but you just cannot have more, unless you can split the project into smaller ones with well-specified boundaries.</li>
+<li>No juniors.
+   Because a "straight to the point solution" is not "the first out of the head".
+   The automatic following "the best practices" also goes to trash, as they are tailored to the constructive style.</li>
+<li>It is much easier to end up with an untractable mess in the codebase.
+   You have to plan for regular reviews and refactorings.
+   A major event in the constructive style, refactoring becomes a permanent activity in the organic.</li>
+<li>Still, the code could look like a mess.
+   And there are much less developers ready to work in this style.</li>
+</ol>
+<p>Still, for a young (or simply a small-scale) project the organic style seems to me much more preferable:</p>
+<ol>
+<li>Organic small-scale is maybe an order (orders?) of magnitude larger than constructive small-scale in terms of functionality and user base.
+   Because of compactness and efficiency of the codebase.</li>
+<li>3 upper-mid developers are much more affordable than 1 architect, 1 teamlead, 3 mids and 5–10 juniors which are about the same output in the constructive style.</li>
+<li>Compact codebase fosters common ownership, reduces project risks and simplifies onboarding. It also minimizes developers' burnout rate.</li>
+</ol>
+</section>
+            </div>
+            <hr/>
+            <div class="meta">                    <div class="up">
+                        <span> &uarr; <a href='/prog'> Notes on programming</a> &uarr; </span>
+                    </div>
+            </div>
+            <aside style='display: flex'>
+                <div style="display: flex; flex-direction: column; margin-left: auto">
+            <a class="donate-button" href="https://www.patreon.com/blksv" target="blank">Donate</a>
+    </div>
+            </aside>
+        </article>
+    </main>
+
+    <footer>
+<div class="disclaimer">
+    &copy; <a href="https://www.linkedin.com/in/blksv/" rel="author">Andrei Bolkisev</a>,
+ <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA</a>,     2022
+</div>    </footer></body>
+</html>

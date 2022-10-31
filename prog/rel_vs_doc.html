@@ -1,0 +1,91 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Relation vs document DBs</title>
+    <meta charset="utf-8" />    <link rel="canonical" href="/prog/rel_vs_doc" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="/style.css" />
+    <link rel="icon" type="image/png" href="/images/favicon.png"/>
+<meta property="og:locale" content="en" />    <meta property="og:type" content="website" /><meta property="og:title" content="" />
+<meta property="og:url" content="https://blksv.dev/prog/rel_vs_doc" /></head>
+
+<body>
+    <header>
+<nav class="menu">
+    <label class="menu-container" for="toggle-menu">
+        <div class="menu-head">
+            <a href='/' class="menu-home">Andrei Bolkisev</a>
+            <div class="social">
+                <span style="vertical-align: middle;"> Contact:</span>
+                <a class="menu-link" href='https://t.me/blksv' target="_blank"><img src='/images/tg.svg' style='height: 1em;'></a>
+                <a class="menu-link" href='/contact' target="_blank"><img src='/images/mail.svg' style='height: 1em;'></a>
+                <a class="menu-link" href='https://www.linkedin.com/in/blksv/' target="_blank"><img src='/images/li.svg' style='height: 1em;'></a>
+                |
+                <a href="/feed.atom.xml" class="menu-link"><i class="share">&#xea9b;</i></a>
+                <a href="/updates" class="menu-link"><i class="share">&#xe953;</i></a>
+            </div>
+        </div>
+        <span class="checkmark">&equiv;</span>
+    </label>
+    <input type="checkbox" id="toggle-menu" class="toggle-menu" />
+    <ul class="menu">            <li class="menu-item"><a href="/contract" class="menu-link">Contract Guidelines</a></li>            <li class="menu-item"><a href="/tc" class="menu-link">Contract T&amp;C</a></li>            <li class="menu-item"><a href="/prog" class="menu-link">Blog</a></li>    </ul>
+</nav>    </header>
+    <main>
+        <article>
+            <header>
+                <h1> Relation vs document DBs </h1>
+                <div class="meta">                        <p> Published: <time>2022-07-04</time> </p>
+<p>Up:</p>
+                            <ul>
+    <a href='/prog'>Notes on programming</a>
+
+    </ul>
+
+                </div>
+            </header>
+            <div class="content">                <section id="">
+<div class="meta">
+</div>
+<p>There is a common notion that it is better to begin with a document database, because this way you will not waste time designing the relational schema for your domain upfront and then evolving it as your domain knowledge deepens, but instantly and seamlessly incorporate all new knowledge in a schema-less storage.</p>
+<p>This is complete nonsense.</p>
+<p>While incomplete and sometimes faulty, we still have some understanding how our domain looks like, i.e. what objects with what properties it consists of.
+This is a ready relational schema.
+Just for the sake of documentation only, it is much better to have this schema documented materially as a working database structure, rather than "it is what the latest version of our backend works on, go check the docs (likely stale) or the sources (likely with conflicting views of the data in different modules)".</p>
+<p>Evolving the schema usually consists of adding/removing fields, introducing additional entities and establishing new relationships.
+With a relational DB, it is a matter of a couple sql queries to the DB and maybe some changes in the data-retrieval/storage queries in the backend.
+And you'll have a dataset completely consistent with the new schema.
+With a document DB — it is at least a full-fledged migration: retrieve all the data from the affected collections, transform into new form, store back to the database, run checks to ensure consistency; and all this requires writing new code.
+And often, it is not only a migration, but a refactoring/rewriting also.
+While the new schema can usually be adapted to the old backend with a several lines of SQL, document DBs don't offer such flexibility and the backend, by and large, operates on the data structures as they are stored.
+Change the schema ⇒ rewrite the backend.
+Radical change ⇒ radical rewrite.</p>
+<p>And this leads us to a more fundamental problem.</p>
+<p>Normalized relational schema presents the domain (or our knowledge of) as it is.
+The schema neither depends on how we arrive at it (in contrast with document «schemas» where new knowledge often ends up not where it belongs but where it was the least effort to put it at the time of adding), nor on how we use it.
+And while the domain structure usually can be discovered accurately enough beforehand, the most efficient data representations are unknown until after we start to implement our data consumers.
+Moreover, this representations are likely to significantly differ between the consumers.
+From a relational DB a consumer can request the most appropriate representation almost for free: the database will find the most efficient way to construct the needed representation.
+With a document DB, all the consumers start with the same data representation and transform it on their own in a much more resource-consuming way (both human: to write, test and maintain the needed code, and computational: as this code cannot use database indexes and statistics and is written not in a systems language).</p>
+<p>Even if your domain has inherently unstructured parts, calling for a document storage, it is often still beneficial to employ a relational storage with document extensions, for the "relational" part of the domain is almost always underestimated, as well as difficulties of working with piles of unstructured data.</p>
+</section>
+            </div>
+            <hr/>
+            <div class="meta">                    <div class="up">
+                        <span> &uarr; <a href='/prog'> Notes on programming</a> &uarr; </span>
+                    </div>
+            </div>
+            <aside style='display: flex'>
+                <div style="display: flex; flex-direction: column; margin-left: auto">
+            <a class="donate-button" href="https://www.patreon.com/blksv" target="blank">Donate</a>
+    </div>
+            </aside>
+        </article>
+    </main>
+
+    <footer>
+<div class="disclaimer">
+    &copy; <a href="https://www.linkedin.com/in/blksv/" rel="author">Andrei Bolkisev</a>,
+ <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA</a>,     2022
+</div>    </footer></body>
+</html>

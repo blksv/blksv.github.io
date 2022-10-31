@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+<title>Andrei Bolkisev</title>
+<link href="https://blksv.dev"/>
+<link rel="self" href="/feed.atom.xml" />
+<updated>2022-07-05</updated>
+<author>
+    <name>Andrei Bolkisev</name>
+</author>
+<id>https://blksv.dev</id>
+
+    <entry>
+        <title>Organic vs constructive programming</title>
+        <link href="https://blksv.dev/prog/org_vs_constr" rel="alternate"/>
+        <id>https://blksv.dev/prog/org_vs_constr</id>
+        <content src="https://blksv.dev/prog/org_vs_constr"></content>
+        <updated>2022-07-05</updated>
+        <published>2022-07-05</published>
+        <summary type="html">></summary>
+        <author>
+            <name>Andrei Bolkisev</name>
+        </author>
+    </entry>
+    <entry>
+        <title>Relation vs document DBs</title>
+        <link href="https://blksv.dev/prog/rel_vs_doc" rel="alternate"/>
+        <id>https://blksv.dev/prog/rel_vs_doc</id>
+        <content src="https://blksv.dev/prog/rel_vs_doc"></content>
+        <updated>2022-07-04</updated>
+        <published>2022-07-04</published>
+        <summary type="html">></summary>
+        <author>
+            <name>Andrei Bolkisev</name>
+        </author>
+    </entry>
+</feed>
