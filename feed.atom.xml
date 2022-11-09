@@ -4,12 +4,36 @@
 <title>Andrei Bolkisev</title>
 <link href="https://blksv.dev"/>
 <link rel="self" href="/feed.atom.xml" />
-<updated>2022-07-05</updated>
+<updated>2022-11-08</updated>
 <author>
     <name>Andrei Bolkisev</name>
 </author>
 <id>https://blksv.dev</id>
 
+    <entry>
+        <title>Books that shaped me as a programmer</title>
+        <link href="https://blksv.dev/prog/books" rel="alternate"/>
+        <id>https://blksv.dev/prog/books</id>
+        <content src="https://blksv.dev/prog/books"></content>
+        <updated>2022-11-08</updated>
+        <published>2022-11-08</published>
+        <summary type="html">></summary>
+        <author>
+            <name>Andrei Bolkisev</name>
+        </author>
+    </entry>
+    <entry>
+        <title>GraphQL</title>
+        <link href="https://blksv.dev/prog/graphql" rel="alternate"/>
+        <id>https://blksv.dev/prog/graphql</id>
+        <content src="https://blksv.dev/prog/graphql"></content>
+        <updated>2022-11-08</updated>
+        <published>2022-11-08</published>
+        <summary type="html">></summary>
+        <author>
+            <name>Andrei Bolkisev</name>
+        </author>
+    </entry>
     <entry>
         <title>Organic vs constructive programming</title>
         <link href="https://blksv.dev/prog/org_vs_constr" rel="alternate"/>

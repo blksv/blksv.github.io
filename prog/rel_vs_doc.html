@@ -61,12 +61,12 @@ While the new schema can usually be adapted to the old backend with a several li
 Change the schema ⇒ rewrite the backend.
 Radical change ⇒ radical rewrite.</p>
 <p>And this leads us to a more fundamental problem.</p>
-<p>Normalized relational schema presents the domain (or our knowledge of) as it is.
-The schema neither depends on how we arrive at it (in contrast with document «schemas» where new knowledge often ends up not where it belongs but where it was the least effort to put it at the time of adding), nor on how we use it.
+<p>Normalized relational schema presents the domain (our knowledge of) as it is.
+The schema neither depends on how we arrive at it (in contrast with document "schemas" where new knowledge often ends up not where it belongs but where it was the least effort to put it at the time of adding), nor on how we use it.
 And while the domain structure usually can be discovered accurately enough beforehand, the most efficient data representations are unknown until after we start to implement our data consumers.
 Moreover, this representations are likely to significantly differ between the consumers.
-From a relational DB a consumer can request the most appropriate representation almost for free: the database will find the most efficient way to construct the needed representation.
-With a document DB, all the consumers start with the same data representation and transform it on their own in a much more resource-consuming way (both human: to write, test and maintain the needed code, and computational: as this code cannot use database indexes and statistics and is written not in a systems language).</p>
+From a relational DB a consumer can request the most appropriate representation almost for free: the database will find the most efficient way to construct the needed representation (ok, maybe after some tinkering with the queries).
+With a document DB, all the consumers start with the same data representation and transform it on their own in a much more resource-consuming way (both human: to write, test and maintain the needed code, and computational: as this code cannot use database indexes and statistics and is usually written not in a systems language).</p>
 <p>Even if your domain has inherently unstructured parts, calling for a document storage, it is often still beneficial to employ a relational storage with document extensions, for the "relational" part of the domain is almost always underestimated, as well as difficulties of working with piles of unstructured data.</p>
 </section>
             </div>

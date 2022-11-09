@@ -2,13 +2,13 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Notes on programming</title>
-    <meta charset="utf-8" />    <link rel="canonical" href="/prog" />
+    <title>GraphQL</title>
+    <meta charset="utf-8" />    <link rel="canonical" href="/prog/graphql" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="stylesheet" href="/style.css" />
     <link rel="icon" type="image/png" href="/images/favicon.png"/>
 <meta property="og:locale" content="en" />    <meta property="og:type" content="website" /><meta property="og:title" content="" />
-<meta property="og:url" content="https://blksv.dev/prog" /></head>
+<meta property="og:url" content="https://blksv.dev/prog/graphql" /></head>
 
 <body>
     <header>
@@ -34,17 +34,50 @@
     <main>
         <article>
             <header>
-                <h1> Notes on programming </h1>
-                <div class="meta">                </div>
+                <h1> GraphQL </h1>
+                <div class="meta">                        <p> Published: <time>2022-11-08</time> </p>
+<p>Up:</p>
+                            <ul>
+    <a href='/prog'>Notes on programming</a>
+
+    </ul>
+
+                </div>
             </header>
             <div class="content">                <section id="">
 <div class="meta">
 </div>
-<div class="anchor-index"><ol><li><a href='/prog/rel_vs_doc'>Relation vs document DBs</a></li><li><a href='/prog/org_vs_constr'>Organic vs constructive programming</a></li><li><a href='/prog/books'>Books that shaped me as a programmer</a></li><li><a href='/prog/graphql'>GraphQL</a></li></ol></div>
+<p>I'm strongly against it as I see only one very narrow use case for that technology (see below), which on its own is somewhat doubtful.</p>
+<p>The problems are:</p>
+<ol>
+<li>
+<p>You usually have to maintain a consistent description of your data scheme at the following levels:</p>
+<ul>
+<li>the data storage itself,</li>
+<li>data storage ↔ ORM connector,</li>
+<li>ORM connector ↔ GraphQL resolver,</li>
+<li>GraphQL queries at the consumer.</li>
+</ul>
+<p>This. Is. Hard.</p>
+</li>
+<li>
+<p>To make the «ORM connector ↔ GraphQL resolver» subsystem use the database efficiently is on the brink of impossible. In fact, it can bring the DB down through the N+1 problem even on the simplest queries. Trying to fix the problem with the extensive caching creates a whole host of very intricate cache inconsistency bugs.</p>
+</li>
+<li>
+<p>Exposing GraphQL APIs is about the same as exposing direct SQL to your database. You really don't want this machine gun to get into the wrong hands. Frontend developers' hands are usually wrong too.</p>
+</li>
+<li>
+<p>Being RPC-styled, GraphQL requests cannot be rerouted at the web server / load balancer level because you need to parse the query to determine where it should go. This creates unnecessary infrastructure overhead when you decide to spin off some parts of your application server as separate microservices.</p>
+</li>
+</ol>
+<p>The only case for GraphQL I can come by is when a lot of teams work on different backend-for-fronted services with so different and so fluent data requirements, that it is more practical to have the «data-providing» team work on a generic GraphQL interface instead of implementing requests from «data-consuming» teams.</p>
 </section>
             </div>
             <hr/>
-            <div class="meta">            </div>
+            <div class="meta">                    <div class="up">
+                        <span> &uarr; <a href='/prog'> Notes on programming</a> &uarr; </span>
+                    </div>
+            </div>
             <aside style='display: flex'>
                 <div style="display: flex; flex-direction: column; margin-left: auto">
             <a class="donate-button" href="https://www.patreon.com/blksv" target="blank">Donate</a>
