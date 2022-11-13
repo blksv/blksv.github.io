@@ -2,12 +2,12 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Notes on programming</title>
-    <meta charset="utf-8" />    <link rel="canonical" href="/prog" />
+    <title>Objects and ORMs</title>
+    <meta charset="utf-8" />    <link rel="canonical" href="/prog/orm" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="stylesheet" href="/style.css" />    <link rel="icon" type="image/png" href="/images/favicon.png"/>
 <meta property="og:locale" content="en" />    <meta property="og:type" content="website" /><meta property="og:title" content="" />
-<meta property="og:url" content="https://blksv.dev/prog" /></head>
+<meta property="og:url" content="https://blksv.dev/prog/orm" /></head>
 
 <body>
     <header>
@@ -33,17 +33,30 @@
     <main>
         <article>
             <header>
-                <h1> Notes on programming </h1>
-                <div class="meta">                </div>
+                <h1> Objects and ORMs </h1>
+                <div class="meta">                        <p> Published: <time>2022-11-12</time> </p>
+<p>Up:</p>
+                            <ul>
+    <a href='/prog'>Notes on programming</a>
+
+    </ul>
+
+                </div>
             </header>
             <div class="content">                <section id="">
 <div class="meta">
 </div>
-<div class="anchor-index"><ol><li><a href='/prog/rel_vs_doc'>Relation vs document DBs</a></li><li><a href='/prog/org_vs_constr'>Organic vs constructive programming</a></li><li><a href='/prog/graphql'>GraphQL</a></li><li><a href='/prog/books'>Books that shaped me as a programmer</a></li><li><a href='/prog/orm'>Objects and ORMs</a></li></ol></div>
+<p>Somehow, a long time ago, object-oriented design practices went down a crooked path of equating domain objects with software objects. While justified in some use cases, such confusion is disastrous when applied as a general principle.</p>
+<p>Why is the distinction between domain and software object important? Because software operates on a different conceptual level. Try to imagine a manager being sent to a DatabaseConnection in the real world. Nonsense.</p>
+<p>An object in a program <em>is</em> an actor with some behavior and state. It's not what we usually have when representing domain objects in our programs. In most cases, we have some data related to the domain objects and rules of operations with this data. And trying to make datasets actors leads to very awkward designs (when you question yourself in which class you should put a method, say, should it be <code>Manager.fire(Employee)</code> or <code>Employee.fire()</code> you're doing exactly this).</p>
+<p>But this dubious activity is the main purpose of ORMs; let alone the much more dubious case when ORM is used as a glorified and terribly inefficient query builder just proxying data requests to the DB.</p>
 </section>
             </div>
             <hr/>
-            <div class="meta">            </div>
+            <div class="meta">                    <div class="up">
+                        <span> &uarr; <a href='/prog'> Notes on programming</a> &uarr; </span>
+                    </div>
+            </div>
             <aside style='display: flex'>
                 <div style="display: flex; flex-direction: column; margin-left: auto">
             <a class="donate-button" href="https://www.patreon.com/blksv" target="blank">Donate</a>

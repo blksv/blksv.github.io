@@ -4,12 +4,36 @@
 <title>Andrei Bolkisev</title>
 <link href="https://blksv.dev"/>
 <link rel="self" href="/feed.atom.xml" />
-<updated>2022-11-08</updated>
+<updated>2022-11-13</updated>
 <author>
     <name>Andrei Bolkisev</name>
 </author>
 <id>https://blksv.dev</id>
 
+    <entry>
+        <title>Brain</title>
+        <link href="https://blksv.dev/brain" rel="alternate"/>
+        <id>https://blksv.dev/brain</id>
+        <content src="https://blksv.dev/brain"></content>
+        <updated>2022-11-13</updated>
+        <published>2022-11-13</published>
+        <summary type="html">></summary>
+        <author>
+            <name>Andrei Bolkisev</name>
+        </author>
+    </entry>
+    <entry>
+        <title>Objects and ORMs</title>
+        <link href="https://blksv.dev/prog/orm" rel="alternate"/>
+        <id>https://blksv.dev/prog/orm</id>
+        <content src="https://blksv.dev/prog/orm"></content>
+        <updated>2022-11-12</updated>
+        <published>2022-11-12</published>
+        <summary type="html">></summary>
+        <author>
+            <name>Andrei Bolkisev</name>
+        </author>
+    </entry>
     <entry>
         <title>Books that shaped me as a programmer</title>
         <link href="https://blksv.dev/prog/books" rel="alternate"/>
