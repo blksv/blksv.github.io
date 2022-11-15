@@ -1,0 +1,296 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Convert LaTeX to SVG or PNG image</title>
+    <meta charset="utf-8" />    <link rel="canonical" href="/latex" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="/style.css" />    <link rel="icon" type="image/png" href="/images/favicon.png"/>
+<meta property="og:locale" content="en" />    <meta property="og:type" content="website" /><meta property="og:title" content="" />
+<meta property="og:url" content="https://blksv.dev/latex" />        <link rel="stylesheet" href="/latex/style.css" />
+<link rel="icon" href="/latex/favicon.png" />
+<meta name="description" content="A simple free online utility to convert LaTeX string into PNG or SVG image" />
+<script>
+    MathJax = {
+        tex: {
+            inlineMath: [['$', '$']],
+        },
+        svg: {
+            fontCache: 'local'
+        }
+    };
+</script>
+<script src="/latex/tex-svg-full.js" type="text/javascript"></script>
+
+
+</head>
+
+<body>
+    <header>
+<nav class="menu">
+    <label class="menu-container" for="toggle-menu">
+        <div class="menu-head">
+            <a href='/' class="menu-home">Andrei Bolkisev</a>
+            <div class="social">
+                <span style="vertical-align: middle;"> Contact:</span>
+                <a class="menu-link" href='https://t.me/blksv' target="_blank"><img src='/images/tg.svg' style='height: 1em;'></a>
+                <a class="menu-link" href='/contact' target="_blank"><img src='/images/mail.svg' style='height: 1em;'></a>
+                <a class="menu-link" href='https://www.linkedin.com/in/blksv/' target="_blank"><img src='/images/li.svg' style='height: 1em;'></a>
+                |
+                <a href="/feed.atom.xml" class="menu-link"><i class="share">&#xea9b;</i></a>
+                <a href="/updates" class="menu-link"><i class="share">&#xe953;</i></a>
+            </div>
+        </div>
+        <span class="checkmark">&equiv;</span>
+    </label>
+    <input type="checkbox" id="toggle-menu" class="toggle-menu" />
+    <ul class="menu">            <li class="menu-item"><a href="/contract" class="menu-link">Contract Guidelines</a></li>            <li class="menu-item"><a href="/tc" class="menu-link">Contract T&amp;C</a></li>            <li class="menu-item"><a href="/prog" class="menu-link">Blog</a></li>            <li class="menu-item"><a href="/brain" class="menu-link">Brain</a></li>            <li class="menu-item"><a href="/tools" class="menu-link">Tools</a></li>    </ul>
+</nav>    </header>
+    <main>
+        <article>
+            <header>
+                <h1> Convert LaTeX to SVG or PNG image </h1>
+                <div class="meta"><p>Up:</p>
+                            <ul>
+    <a href='/tools'>Tools and utils</a>
+
+    </ul>
+
+                </div>
+            </header>
+            <div class="content">                <section id="">
+<div class="meta">
+</div>
+<p><label>Latex input (multiline): <div id='input' contenteditable>\sum_{k=0}^N k \cdot \sin(x)</div></label>
+<label><input id='displayStyle' type='checkbox' checked> Display style</label>
+<label><input id='transparent' type='checkbox' checked> Transparent background</label>
+<br/>
+<label>Result: <div id='output'></div> </label>
+<button id='addToHistory'>Save</button>
+|
+<label>
+    <button id='download' title="Download"><i>&#xe933;</i> Download</button>
+    <button id='link' title="Get temporary link"><i>&#xe9cb;</i> Get link</button>
+    <button id='share' title="Share"><i>&#xea82;</i> Share</button>
+    as
+    <input type="radio" name="img-format" id='svgFmt' value='SVG' checked>SVG</input>
+    <input type="radio" name="img-format" id='pngFmt' value='PNG'>PNG</input>
+</label>
+<br/></p>
+<div id="linkPreparing" style="display: none">Your link is being prepared.</div>
+<div id="linkReady" style="display: none">Your <a id='linkRef'>link</a> is copied to clipboard. It's valid for 10 minutes.</div>
+<div id="linkError" style="display: none">Error while preparing link: <span id='errorReason'></span></div>
+<p><br/></p>
+<div id="divHistory"></div>
+<script>
+    const renderOptions = {display: true, lineWidth: 1};
+    let history = JSON.parse(localStorage.getItem('history') || '[]');
+
+    function debounce(func, wait) {
+        let timeout = null;
+        return function() {
+            const context = this;
+            const args = arguments;
+            const later = function() {
+                timeout = null;
+                func.apply(context, args);
+            };
+            clearTimeout(timeout);
+            timeout = setTimeout(later, wait);
+        };
+    };
+
+    function render() {
+        linkStatus('clear');
+        const element = MathJax.tex2svg(input.innerText, {...renderOptions, display: displayStyle.checked});
+        output.innerHTML = '';
+        output.appendChild(element.firstElementChild);
+    }
+
+    function getSvgDataUri() {
+        const svgURL = new XMLSerializer().serializeToString(output.firstElementChild);
+        return 'data:image/svg+xml;charset=utf8,' + encodeURIComponent(svgURL);
+    }
+
+    function getPngDataUri() {
+        return new Promise((resolve, reject) => {
+            const canvas = document.createElement("canvas");
+            const ctx = canvas.getContext('2d');
+            const img = new Image();
+            img.onload = function() {
+                let {x, y, width, height} = output.firstElementChild.getBBox();
+                const scale = Math.max(1, Math.max(width/10000, height/10000))*10;
+                canvas.width = width/scale;
+                canvas.height = height/scale;
+                if (!transparent.checked) {
+                    ctx.fillStyle = '#fff';
+                    ctx.fillRect(0, 0, canvas.width, canvas.height);
+                }
+                ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+                const res = canvas.toDataURL();
+                delete canvas;
+                delete img;
+                resolve(res);
+            }
+            img.src = getSvgDataUri();
+        });
+    }
+
+    function getImageData() {
+        if (svgFmt.checked)
+            return {name: 'expr.svg', content_type: 'image/svg', 'uri': getSvgDataUri()}
+        if (pngFmt.checked)
+            return {name: 'expr.png', content_type: 'image/png', 'uri': getPngDataUri()}
+    }
+
+    function fillHistory() {
+        const hist = JSON.parse(localStorage.getItem('history') || '[]');
+        const res = [];
+        for (let i = 0; i < hist.length; ++i) {
+            res.push(`<div class='history-item'>
+                <span class='expr' x-data=${i}>\$${hist[i]}\$</span>
+                <br/>
+                <button x-data=${i} x-del=true><i>&#xe9ad;</i> Delete</button>
+            </div>`);
+        }
+        divHistory.innerHTML = res.join("\n");
+        MathJax.typeset([divHistory], {display: false});
+    }
+
+    async function onDownload() {
+        const data = getImageData();
+        const link = document.createElement("a");
+        link.download = data.name;
+        link.href = await data.uri;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        delete link;
+    }
+
+    async function onShare() {
+        if (navigator.share) {
+            const data = getImageData();
+            const files = [new File([await fetch(await data.uri).then(r => r.blob())], data.name, {type: data.content_type})];
+            if (navigator.canShare && navigator.canShare({files: files})) {
+                await navigator.share({
+                    files: files,
+                    title: data.name
+                })
+            }
+        }
+    }
+
+    async function onCopy() {
+        const data = getImageData();
+        navigator.clipboard.writeText(await data.uri);
+    }
+
+    function linkStatus(status, msg) {
+        if (status === 'clear') {
+            linkPreparing.style.display = 'none';
+            linkReady.style.display = 'none';
+            linkError.style.display = 'none';
+        }
+        else if (status === 'prepare') {
+            linkPreparing.style.display = 'unset';
+            linkReady.style.display = 'none';
+            linkError.style.display = 'none';
+        }
+        else if (status === 'ready') {
+            linkPreparing.style.display = 'none';
+            linkReady.style.display = 'unset';
+            linkRef.href = msg;
+            linkError.style.display = 'none';
+        }
+        else if (status === 'error') {
+            linkPreparing.style.display = 'none';
+            linkReady.style.display = 'none';
+            linkError.style.display = 'unset';
+            errorReason.innerText = msg;
+        }
+    }
+
+    async function onGetLink() {
+        linkStatus('prepare');
+        try {
+            const data = getImageData();
+            const res = await fetch(`https://api.blksv.dev/math/new`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': data.content_type
+                },
+                body: await fetch(await data.uri).then(r => r.blob())
+            });
+            if (res.ok) {
+                const ref = `${location.origin}/${await res.text()}`;
+                navigator.clipboard.writeText(ref);
+                linkStatus('ready', ref);
+            }
+            else {
+                console.log(res)
+                linkStatus('error', res.statusText);
+            }
+        }
+        catch (e) {
+            linkStatus('error', e)
+        }
+    }
+
+    function onAddToHistory() {
+        history.unshift(input.innerText);
+        localStorage.setItem('history', JSON.stringify(history));
+        fillHistory();
+    }
+
+    function deleteFromHistory(index) {
+        history.splice(index, 1);
+        localStorage.setItem('history', JSON.stringify(history));
+        fillHistory();
+    }
+
+    function onHistoryClick(e) {
+        const idx = Number(e.target.getAttribute('x-data'));
+        if (e.target.getAttribute('x-del'))
+            deleteFromHistory(idx)
+        else {
+            input.innerText = history[idx];
+            render();
+        }
+    }
+
+    input.oninput = debounce(render, 1000);
+    download.onclick = onDownload;
+    share.onclick = onShare;
+    //copy.onclick = onCopy;
+    link.onclick = onGetLink;
+    divHistory.onclick = onHistoryClick;
+    addToHistory.onclick = onAddToHistory;
+    displayStyle.onchange = render;
+    if (!navigator.share || !navigator.canShare)
+        share.style.display = 'none';
+    render();
+    fillHistory();
+    input.focus();
+</script>
+</section>
+            </div>
+            <hr/>
+            <div class="meta">                    <div class="up">
+                        <span> &uarr; <a href='/tools'> Tools and utils</a> &uarr; </span>
+                    </div>
+            </div>
+            <aside style='display: flex'>
+                <div style="display: flex; flex-direction: column; margin-left: auto">
+            <a class="donate-button" href="/donate" target="blank">Donate</a>
+    </div>
+            </aside>
+        </article>
+    </main>
+
+    <footer>
+<div class="disclaimer">
+    &copy; <a href="https://www.linkedin.com/in/blksv/" rel="author">Andrei Bolkisev</a>,
+ <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA</a>,     2022
+</div>    </footer></body>
+</html>

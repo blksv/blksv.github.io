@@ -1,0 +1,91 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Interactive google polyline decoder/encoder</title>
+    <meta name="description" content="Online tool to parse, create and visualize google encoded polylines" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="theme-color" content="#000000">
+    <link rel="shortcut icon" href="/polyline/favicon.png">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.5.1/dist/leaflet.css"
+        integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="
+        crossorigin=""/>
+    <link rel="stylesheet" href="/polyline/style.css">
+    <script src="https://unpkg.com/leaflet@1.5.1/dist/leaflet.js"
+        integrity="sha512-GffPMF3RvMeYyc1LWMHtK8EbPv0iNZ8/oTtHPx9/cc2ILxQ+u905qIwdpULaqDkyBKgOaB57QTMg7ztg8Jm2Og=="
+        crossorigin=""></script>
+    <script src="https://unpkg.com/leaflet-editable@1.2.0/src/Leaflet.Editable.js" ></script>
+    <script type="module">
+        import * as map from "/polyline/map.js";
+        window.map = map;
+    </script>
+
+  </head>
+  <body onpageshow="map.showMap()">
+    <noscript>
+      You need to enable JavaScript to run this app.
+    </noscript>
+    <div id="root" class="row">
+        <div id="controls" class="col">
+            <div class="row menu" style="justify-content: space-between;">
+                <div><a href="/">Andrei Bolkisev</a> / <a href="/tools">Tools</a></div>
+                <div>
+                    <span style="vertical-align: middle;"> Contact:</span>
+                    <a class="menu-link" href="https://t.me/blksv" target="_blank"><img src="/images/tg.svg" style="height: 1em;"></a>
+                    <a class="menu-link" href="/contact" target="_blank"><img src="/images/mail.svg" style="height: 1em;"></a>
+                    <a class="menu-link" href="https://www.linkedin.com/in/blksv/" target="_blank"><img src="/images/li.svg" style="height: 1em;"></a>
+                    |
+                    <a href="/feed.atom.xml" class="menu-link"><i class="share"></i></a>
+                    <a href="/updates" class="menu-link"><i class="share"></i></a>
+                </div>
+            </div>
+
+            <div class="row">
+                <label id="polylineInputLabel"
+                    class="tab-title active"
+                    for="polylineInput"
+                    onclick="map.setState({activeTab: 'polyline'})">
+                        Polyline
+                </label>
+                <label id="coordsInputLabel"
+                    class="tab-title"
+                    for="coordsInput"
+                    onclick="map.setState({activeTab: 'coords'})">
+                        Coords
+                </label>
+                <label id="donateTabLabel"
+                    class="tab-title"
+                    onclick="map.setState({activeTab: 'donate'})">
+                        About/GitHub
+                </label>
+            </div>
+            <div id="polylineTab" class="col tab hidden">
+                <textarea id="polylineInput" placeholder="Insert a polyline to decode..."></textarea>
+                <button onclick="map.decodePolyline()">Decode</button>
+            </div>
+            <div id="coordsTab" class="col tab hidden">
+                <textarea id="coordsInput" placeholder="lat1 lon1&#x0a;lat2 lon2&#x0a;..."></textarea>
+                <button onclick="map.encodeCoords()">Encode</button>
+            </div>
+            <div id="donateTab" class="col tab text">
+                <p>
+                    This tool is for developers who need to debug custom polyline codes.
+                    It works offline once loaded. You can find the sources on
+                    <a href="https://github.com/blksv/polyline">GitHub</a>
+                    (along with java, python and plpgsql implementations of polyline encoding and decoding functions).
+                    I tried to make it easy to encode additional values in a polyline so you can add and test them in
+                    your fork of this repo.
+                </p>
+            </div>
+        </div>
+        <div id="map">
+            <div id="mapControls" class="col">
+                <button onclick="map.editLine()">Edit</button>
+                <button class="hidden" id="clearBtn" onclick="map.clear()">Clear</button>
+                <button class="hidden" id="continueFwdBtn" onclick="map.continueLine(false)">Continue forward</button>
+                <button class="hidden" id="continueBwdBtn" onclick="map.continueLine(true)">Continue backward</button>
+                <button class="hidden" id="commitBtn" onclick="map.commit()">Commit</button>
+            </div>
+        </div>
+    </body>
+</html>

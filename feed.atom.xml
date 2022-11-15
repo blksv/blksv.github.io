@@ -4,12 +4,24 @@
 <title>Andrei Bolkisev</title>
 <link href="https://blksv.dev"/>
 <link rel="self" href="/feed.atom.xml" />
-<updated>2022-11-13</updated>
+<updated>2022-11-14</updated>
 <author>
     <name>Andrei Bolkisev</name>
 </author>
 <id>https://blksv.dev</id>
 
+    <entry>
+        <title>Tools and utils</title>
+        <link href="https://blksv.dev/tools" rel="alternate"/>
+        <id>https://blksv.dev/tools</id>
+        <content src="https://blksv.dev/tools"></content>
+        <updated>2022-11-14</updated>
+        <published>2022-11-14</published>
+        <summary type="html">></summary>
+        <author>
+            <name>Andrei Bolkisev</name>
+        </author>
+    </entry>
     <entry>
         <title>Brain</title>
         <link href="https://blksv.dev/brain" rel="alternate"/>
