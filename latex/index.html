@@ -223,7 +223,7 @@
                 body: await fetch(await data.uri).then(r => r.blob())
             });
             if (res.ok) {
-                const ref = `${location.origin}/${await res.text()}`;
+                const ref = `https://api.blksv.dev/math/${await res.text()}`;
                 navigator.clipboard.writeText(ref);
                 linkStatus('ready', ref);
             }
