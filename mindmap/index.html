@@ -1,0 +1,142 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Text to Mindmap</title>
+    <meta name="description" content="Online demo of a mindmapping tool" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="theme-color" content="#000000">
+    <link rel="shortcut icon" href="/mindmap/favicon.png">
+    <link rel="stylesheet" href="/mindmap/style.css">
+    <script type="module">
+        import * as map from "/mindmap/mindmap.js";
+        window.map = map;
+    </script>
+    <style>
+        .node {
+            stroke-width: 0.5px;
+            fill: #ffffff;
+            stroke: black;
+            cursor: pointer;
+        }
+
+        .group {
+        stroke-width: 1.5px;
+        opacity: 0.7;
+        }
+
+        .link {
+            stroke: black;
+            stroke-width: 1px;
+            stroke-opacity: 1;
+            fill: none;
+            marker-end: url(#end-arrow);
+        }
+
+        .far-link {
+            stroke-dasharray: 5 5;
+        }
+
+        .sibling-link {
+            stroke: aqua;
+        }
+
+        .label {
+            font-size: 12px;
+            dominant-baseline: text-before-edge;
+        }
+    </style>
+
+  </head>
+  <body onpageshow="map.updateMindmap()">
+    <noscript>
+      You need to enable JavaScript to run this app.
+    </noscript>
+    <div id="root" class="row">
+        <div id="controls" class="col">
+            <div class="row menu" style="justify-content: space-between;">
+                <div><a href="/">Andrei Bolkisev</a> / <a href="/tools">Tools</a></div>
+                <div>
+                    <span style="vertical-align: middle;"> Contact:</span>
+                    <a class="menu-link" href="https://t.me/blksv" target="_blank"><img src="/images/tg.svg" style="height: 1em;"></a>
+                    <a class="menu-link" href="/contact" target="_blank"><img src="/images/mail.svg" style="height: 1em;"></a>
+                    <a class="menu-link" href="https://www.linkedin.com/in/blksv/" target="_blank"><img src="/images/li.svg" style="height: 1em;"></a>
+                    |
+                    <a href="/feed.atom.xml" class="menu-link"><i class="share"></i></a>
+                    <a href="/updates" class="menu-link"><i class="share"></i></a>
+                </div>
+            </div>
+
+            <div class="row">
+                <label id="mindmapInputLabel"
+                    class="tab-title active"
+                    for="mindmapInput"
+                    onclick="map.setState({activeTab: 'mindmap'})">
+                        Mindmap
+                </label>
+                <label id="donateTabLabel"
+                    class="tab-title"
+                    onclick="map.setState({activeTab: 'donate'})">
+                        About/GitHub
+                </label>
+            </div>
+            <div id="mindmapTab" class="col tab hidden">
+                <textarea id="mindmapInput" placeholder="Mindmap">
+* Mindmap
+
+** Hierarchy
+*** '*' at the beginning of a line starts a new node in the hierarchy
+*** '&' at the beginning of a line starts a stray note
+> The first line is 'heading', others — 'body'
+*** The number of '*' denotes the level of the node in the hierarchy
+> '>' introduces the single child node
+> Its use is to simplify creating of long sequences
+
+** Tags
+*** Tags have the form '\:<name> <optional value>\:'
+**** Thus '\:' in headings must be escaped
+**** Tags can be chained without repeating the '\:' \: '\:<name> <optional value>\:<name> <optional value>\:'
+*** May appear at the beginning and/or the end of a heading
+*** [] Also, may appear in the body
+*** 'id <id>' tag sets node id
+
+** Links
+*** A child node automatically links to its parent
+*** '^ <id>' attaches a node to the node with the specified id as its child
+*** :id link1: '-> <id>' makes link from the current node to the specified
+*** :id link2: '<- <id>' makes link from the specified to the current
+
+& :id pos:-> link1:-> link2:rightTo link2: these two are weaker than parent-child link
+
+** Positioning
+> Only relative\: with 'leftTo', 'rightTo', 'below', 'above', 'near' tags :-> pos:
+
+
+
+
+
+                </textarea>
+                <button onclick="map.updateMindmap()">Update</button>
+            </div>
+            <div id="donateTab" class="col tab text">
+                <p>
+                    It works offline once loaded. You can find the sources on
+                    <a href="https://github.com/blksv/mindmap">GitHub</a>
+                </p>
+            </div>
+        </div>
+        <div id="map">
+            <div id="mapControls" class="col">
+                <button onclick="map.resetZoom()">Reset zoom</button>
+                <button onclick="map.center()">Center</button>
+            </div>
+
+            <svg id="mindmap">
+                <g id="dia"></g>
+            </svg>
+
+            <pre><code id="jsonOutput">
+            </code></pre>
+        </div>
+    </body>
+</html>
