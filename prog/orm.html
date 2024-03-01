@@ -8,7 +8,6 @@
     <link rel="stylesheet" href="/style.css" />    <link rel="icon" type="image/png" href="/images/favicon.png"/>
 <meta property="og:locale" content="en" />    <meta property="og:type" content="website" /><meta property="og:title" content="" />
 <meta property="og:url" content="https://blksv.dev/prog/orm" /></head>
-
 <body>
     <header>
 <nav class="menu">
@@ -28,7 +27,7 @@
         <span class="checkmark">&equiv;</span>
     </label>
     <input type="checkbox" id="toggle-menu" class="toggle-menu" />
-    <ul class="menu">            <li class="menu-item"><a href="/contract" class="menu-link">Contract Guidelines</a></li>            <li class="menu-item"><a href="/tc" class="menu-link">Contract T&amp;C</a></li>            <li class="menu-item"><a href="/prog" class="menu-link">Blog</a></li>            <li class="menu-item"><a href="/brain" class="menu-link">Brain</a></li>            <li class="menu-item"><a href="/tools" class="menu-link">Tools</a></li>    </ul>
+    <ul class="menu">            <li class="menu-item"><a href="/contract" class="menu-link">Contract Guidelines</a></li>            <li class="menu-item"><a href="/tc" class="menu-link">Contract T&amp;C</a></li>            <li class="menu-item"><a href="/prog" class="menu-link">Blog</a></li>            <li class="menu-item"><a href="/tools" class="menu-link">Tools</a></li>    </ul>
 </nav>    </header>
     <main>
         <article>
@@ -49,7 +48,9 @@
 <p>Somehow, a long time ago, object-oriented design practices went down a crooked path of equating domain objects with software objects. While justified in some use cases, such confusion is disastrous when applied as a general principle.</p>
 <p>Why is the distinction between domain and software object important? Because software operates on a different conceptual level. Try to imagine a manager being sent to a DatabaseConnection in the real world. Nonsense.</p>
 <p>An object in a program <em>is</em> an actor with some behavior and state. It's not what we usually have when representing domain objects in our programs. In most cases, we have some data related to the domain objects and rules of operations with this data. And trying to make datasets actors leads to very awkward designs (when you question yourself in which class you should put a method, say, should it be <code>Manager.fire(Employee)</code> or <code>Employee.fire()</code> you're doing exactly this).</p>
-<p>But this dubious activity is the main purpose of ORMs; let alone the much more dubious case when ORM is used as a glorified and terribly inefficient query builder just proxying data requests to the DB.</p>
+<p>But this dubious activity is the main purpose of ORMs; let alone the much more dubious case when an ORM is used as a glorified and terribly inefficient query builder just proxying data requests to the DB.</p>
+<p>Another problem with ORMs is their use for database definition/migration. It is terrible because ORMs can handle only the simplest cases, and a significant part of the database definition and migrations still end up in sql scripts. But such a hybrid migration system is much more fragile and error-prone than a sequence of hand-written sql scripts.</p>
+<p>At a conceptual level, I would say that a client of a system should not have an authority over it. Thus, an application sever, which is a client of a database, should not define its schema.</p>
 </section>
             </div>
             <hr/>
@@ -57,11 +58,6 @@
                         <span> &uarr; <a href='/prog'> Notes on programming</a> &uarr; </span>
                     </div>
             </div>
-            <aside style='display: flex'>
-                <div style="display: flex; flex-direction: column; margin-left: auto">
-            <a class="donate-button" href="/donate" target="blank">Donate</a>
-    </div>
-            </aside>
         </article>
     </main>
 
